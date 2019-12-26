@@ -34,7 +34,7 @@ public:
     // Before
     // ChatLogic *GetChatLogicHandle() { return _chatLogic; }
     // After
-    ChatLogic *GetChatLogicHandle() { return _chatLogic.get(); }
+    std::unique_ptr<ChatLogic> &GetChatLogicHandle() { return _chatLogic; }
 
     // events
     void paintEvent(wxPaintEvent &evt);
