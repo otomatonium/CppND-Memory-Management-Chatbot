@@ -11,7 +11,8 @@ GraphNode::~GraphNode()
     //// STUDENT CODE
     ////
 
-    delete _chatBot; 
+    // Commented out because _chatBot object is managed in ChatLogic
+    // delete _chatBot; 
 
     ////
     //// EOF STUDENT CODE
