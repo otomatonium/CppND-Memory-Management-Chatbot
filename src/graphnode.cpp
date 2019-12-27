@@ -1,5 +1,6 @@
 #include "graphedge.h"
 #include "graphnode.h"
+#include <iostream>
 
 GraphNode::GraphNode(int id)
 {
@@ -12,7 +13,7 @@ GraphNode::~GraphNode()
     ////
 
     // Commented out because _chatBot object is managed in ChatLogic
-    // delete _chatBot; 
+    //delete _chatBot; 
 
     ////
     //// EOF STUDENT CODE
@@ -43,15 +44,16 @@ void GraphNode::AddEdgeToChildNode(std::unique_ptr<GraphEdge> edge)
 
 //// STUDENT CODE
 ////
-void GraphNode::MoveChatbotHere(ChatBot *chatbot)
+void GraphNode::MoveChatbotHere(ChatBot chatbot)
 {
-    _chatBot = chatbot;
+    _chatBot = new ChatBot("../images/chatbot.png");
+    *_chatBot = std::move(chatbot);
     _chatBot->SetCurrentNode(this);
 }
 
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 {
-    newNode->MoveChatbotHere(_chatBot);
+    newNode->MoveChatbotHere(std::move(*_chatBot));
     _chatBot = nullptr; // invalidate pointer at source
 }
 ////
