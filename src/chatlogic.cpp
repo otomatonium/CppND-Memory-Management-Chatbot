@@ -42,16 +42,16 @@ ChatLogic::~ChatLogic()
     {
         delete *it;
     }
-    */
-   // AFTER
-   // (Commented out block)
-
+    
     // delete all edges
     for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
     {
         delete *it;
     }
+    */
 
+    // AFTER
+    // (Commented out block)
     ////
     //// EOF STUDENT CODE
 }
@@ -190,7 +190,10 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
                             // store reference in child node and parent node
                             (*childNode)->AddEdgeToParentNode(edge);
-                            (*parentNode)->AddEdgeToChildNode(edge);
+                            // BEFORE
+                            //(*parentNode)->AddEdgeToChildNode(edge);
+                            // AFTER
+                            (*parentNode)->AddEdgeToChildNode(std::move(std::unique_ptr<GraphEdge>(edge)));
                         }
 
                         ////
