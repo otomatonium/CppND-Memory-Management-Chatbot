@@ -67,6 +67,9 @@ ChatBot &ChatBot::operator=(ChatBot &source) {
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;        
 
+    delete _image;
+    _image = NULL;
+
     _image = new wxBitmap();
     *_image = *source._image;  
 
@@ -84,12 +87,6 @@ ChatBot::ChatBot(ChatBot &&source) {
     source._rootNode = nullptr;
     _currentNode = source._currentNode;                
     source._currentNode = nullptr;
-
-    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
-    {
-        delete _image;
-        _image = NULL;
-    }
 
     _image = source._image;
     source._image = nullptr;
@@ -110,12 +107,7 @@ ChatBot &ChatBot::operator=(ChatBot &&source) {
     _currentNode = source._currentNode;                
     source._currentNode = nullptr;
 
-    if(_image != NULL) // Attention: wxWidgets used NULL and not nullptr
-    {
-        delete _image;
-        _image = NULL;
-    }
-
+    delete _image;
     _image = source._image;
     source._image = nullptr;
 
