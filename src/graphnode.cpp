@@ -5,6 +5,7 @@
 GraphNode::GraphNode(int id)
 {
     _id = id;
+    _chatBot = new ChatBot();
 }
 
 GraphNode::~GraphNode()
@@ -12,8 +13,7 @@ GraphNode::~GraphNode()
     //// STUDENT CODE
     ////
 
-    // Commented out because _chatBot object is managed in ChatLogic
-    //delete _chatBot; 
+     delete _chatBot; 
 
     ////
     //// EOF STUDENT CODE
@@ -29,14 +29,6 @@ void GraphNode::AddEdgeToParentNode(GraphEdge *edge)
     _parentEdges.push_back(edge);
 }
 
-// BEFORE
-/*
-void GraphNode::AddEdgeToChildNode(GraphEdge *edge)
-{
-    _childEdges.push_back(edge);
-}
-*/
-// AFTER
 void GraphNode::AddEdgeToChildNode(std::unique_ptr<GraphEdge> edge)
 {
     _childEdges.push_back(std::move(edge));
@@ -46,7 +38,6 @@ void GraphNode::AddEdgeToChildNode(std::unique_ptr<GraphEdge> edge)
 ////
 void GraphNode::MoveChatbotHere(ChatBot chatbot)
 {
-    _chatBot = new ChatBot("../images/chatbot.png");
     *_chatBot = std::move(chatbot);
     _chatBot->SetCurrentNode(this);
 }
@@ -54,8 +45,12 @@ void GraphNode::MoveChatbotHere(ChatBot chatbot)
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 {
     newNode->MoveChatbotHere(std::move(*_chatBot));
-    _chatBot = nullptr; // invalidate pointer at source
+
+    // Reset _chatBot for future updated ChatBot instance
+    delete _chatBot;    
+    _chatBot = new ChatBot();
 }
+
 ////
 //// EOF STUDENT CODE
 
@@ -63,9 +58,6 @@ GraphEdge *GraphNode::GetChildEdgeAtIndex(int index)
 {
     //// STUDENT CODE
     ////
-    // BEFORE
-    // return _childEdges[index];
-    // AFTER
     return _childEdges[index].get();
     ////
     //// EOF STUDENT CODE

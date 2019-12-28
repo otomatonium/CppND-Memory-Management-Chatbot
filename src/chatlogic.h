@@ -17,9 +17,6 @@ private:
     ////
 
     // data handles (owned)
-    // BEFORE
-    //std::vector<GraphNode *> _nodes;
-    // AFTER
     std::vector<std::shared_ptr<GraphNode>> _nodes;
     std::vector<GraphEdge *> _edges;
 
